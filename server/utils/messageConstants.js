@@ -2,6 +2,7 @@ export const messageConstants={
     INVALID_EMAIL:"Invalid email addess",
     INVALID_PASSWORD:"Invalid password",
     USER_NOT_FOUND:"User not found",
+    POST_NOT_FOUND:"Post not found",
     ERROR:"ERROR",
     VALIDATION_ERROR:"VALIDATION ERROR",
     UNAUTHORISED:"UNAUTHORISED",
