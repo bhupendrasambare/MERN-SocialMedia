@@ -1,11 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
 
 html,
 body,
-#root
-.app
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  font-family: "Rubik", sans-serif;
+}
+
+.login-container{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.login-form-1{
+  padding: 5%;
+}
+.login-random-img{
+  width: 100%;
+  height: 100%;
+  background: url('https://source.unsplash.com/random?socialmedia');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.rounded-20p{
+  border-radius: 20px;
+}
+.form-control::-webkit-input-placeholder { color: white; }
+.form-control:-moz-placeholder { color: white; }
+.form-control::-moz-placeholder { color: white; }
+.form-control:-ms-input-placeholder { color: white; }
+.login-container form{
+  padding: 10%;
+}
+.btnSubmit
 {
-    height: 100%;
-    width: 100%;
-    font-family: 'Rubik', sans-serif;
+  width: 50%;
+  padding: 1.5%;
+  border: none;
+  cursor: pointer;
+}
+.login-form-1 .btnSubmit{
+  font-weight: 600;
+}
+.login-form-2 .btnSubmit{
+  font-weight: 600;
+}
+.login-form-2 .ForgetPwd{
+  font-weight: 600;
+  text-decoration: none;
+}
+.login-form-1 .ForgetPwd{
+  font-weight: 600;
+  text-decoration: none;
 }

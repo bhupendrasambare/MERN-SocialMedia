@@ -52,11 +52,38 @@ export const login = async (request,response)=>{
                         title:user.title,
                     }
                 },process.env.ACCESS_TOKEN_SECRET,{expiresIn:"24h"});
-                response.status(200).json({token:accessToken})
+                response.status(200).json({token:accessToken,user:user})
             }else{
                 response.status(500);
                 errorHandeler(messageConstants.INVALID_PASSWORD,response);
             }
+        }        
+    }catch(err){
+        response.status(500).json({error:err.message})
+    }
+}
+
+/**
+ * PATH : /auth/forogt
+ * @Access : PUBLIC
+ *  */
+export const forgot = async (request,response)=>{
+    try{
+        const {email} =request.body;
+        const user = await User.findOne({email});
+        console.log(user)
+        if(user==null){
+            response.status(statusConstants.VALIDATION_ERROR);
+            errorHandeler(messageConstants.INVALID_EMAIL,response);
+        }else{
+            const passwordHash = await bcrypt.hash('password@123',10);
+            const updatedUser = await User.findByIdAndUpdate(
+                user._id,
+                {password:passwordHash},
+                {new:true}
+            );
+            response.status(200).json({user:updatedUser})
+            
         }        
     }catch(err){
         response.status(500).json({error:err.message})
