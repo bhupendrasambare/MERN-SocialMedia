@@ -44,7 +44,15 @@ const addPost = async (request,response)=>{
 * @Access : PRIVATE
 */
 const getAllPosts = async (request,response)=>{
-    
+    try{
+        const follow = await Follower.find({follower_id:request.user._id});
+        let followingIds = follow.map(item => item.following_id);
+        followingIds.push(request.user._id);
+        const posts = await Post.find({ user_id: { $in: followingIds } }).sort({ createdAt: -1 });
+        response.status(200).json(posts);
+    }catch(err){
+        response.status(500).json({error:err.message})
+    }
 }
 
 /* 
@@ -54,7 +62,18 @@ const getAllPosts = async (request,response)=>{
 * @Access : PRIVATE
 */
 const getUserPosts = async (request,response)=>{
-    
+    try{
+        const user = await User.findById(request.params.id);
+        if(user){
+            const posts = await Post.find({ user_id: user._id }).sort({ createdAt: -1 });
+            response.status(200).json(posts);
+        }else{
+            response.status(statusConstants.NOT_FOUND);
+            errorHandeler(messageConstants.USER_NOT_FOUND,response);
+        }
+    }catch(err){
+        response.status(500).json({error:err.message})
+    }
 }
 
 /* 
@@ -64,7 +83,12 @@ const getUserPosts = async (request,response)=>{
 * @Access : PRIVATE
 */
 const getProfilePosts = async (request,response)=>{
-    
+    try{
+        const posts = await Post.find({ user_id: request.user._id }).sort({ createdAt: -1 });
+        response.status(200).json(posts);
+    }catch(err){
+        response.status(500).json({error:err.message})
+    }
 }
 
 /* 
@@ -74,17 +98,30 @@ const getProfilePosts = async (request,response)=>{
 * @Access : PRIVATE
 */
 const likePost = async (request,response)=>{
-    
-}
+    try{
+        const post = await Post.findById(request.params.id);
+        if(post){
+            console.log(post);
+            const isLiked = post.likes.get(request.user._id);
+            if(isLiked){
+                post.likes.delete(request.user._id); 
+            }else{
+                post.likes.set(request.user._id,true);
+            }
 
-/* 
-* get profile post
-* METHOD  : DELETE
-* @PATH   : /posts/like/:id
-* @Access : PRIVATE
-*/
-const disLikePost = async (request,response)=>{
-    
+            const updatePost = await Post.findByIdAndUpdate(
+                request.params.id,
+                {likes:post.likes},
+                {new:true}
+            )
+            response.status(200).json(updatePost);
+        }else{
+            response.status(statusConstants.NOT_FOUND);
+            errorHandeler(messageConstants.POST_NOT_FOUND,response);
+        }
+    }catch(err){
+        response.status(500).json({error:err.message})
+    }
 }
 
 /* 
@@ -97,4 +134,4 @@ const addComment = async (request,response)=>{
     
 }
 
-export {addPost,getAllPosts,getUserPosts,getProfilePosts,likePost,disLikePost,addComment}
+export {addPost,getAllPosts,getUserPosts,getProfilePosts,likePost,addComment}
