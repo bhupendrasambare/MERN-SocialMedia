@@ -5,20 +5,18 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { setLogin } from '../../state';
 import { useNavigate } from 'react-router-dom';
+import { constants } from '../../AppOption';
 
 const LoginPage = () => {
     const mode = useSelector((state) => state.mode);
+    const [email,setEmail] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showForgotPasswordForm, setShowForgotPasswordForm] = useState(false);
 
     const handleLoginFormSubmit = (values) => {
         // Handle login form submission
-        axios.post('http://localhost:9000/auth/login', values, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        axios.post(constants.serverUrl+'/auth/login', values)
         .then((response) => {
             if (response?.data?.token) {
                 dispatch(setLogin(response.data));
@@ -31,17 +29,12 @@ const LoginPage = () => {
     };
 
     const handleForgotPasswordFormSubmit = (values) => {
-        axios.post('http://localhost:9000/auth/forgot', values, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        axios.post('http://localhost:9000/auth/forgot', values)
         .then((response) => {
             if (response?.data?.user) {
                 setShowForgotPasswordForm(false);
             }
-        })
-        .catch((error) => {
+        }).catch((error) => {
             console.log(error.response.data.message);
         });
     };
@@ -94,6 +87,8 @@ const LoginPage = () => {
                                             id="email"
                                             className={"form-control rounded-5 " + (mode == "light" ? "bg-white text-dark" : "bg-dark text-light")}
                                             {...formikForgotPassword.getFieldProps('email')}
+                                            value={email}
+                                            onChange={(e)=>setEmail(e.target.value)}
                                         />
                                     </div>
                                     {formikForgotPassword.touched.email && formikForgotPassword.errors.email ? (
