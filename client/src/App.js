@@ -11,19 +11,20 @@ import {themeSettings} from "./theme";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "./pages/navbar";
 import "./index.css"
+import Authenticate from "./pages/Authenticate";
 
 
 function App() {
   const mode = useSelector((state) => state.mode )
   return (
-    <div className={(mode=='light'?"bg-light":"bg-dark")+" app"}>
+    <div className={(mode=='light'?"bg-light text-dark":"bg-dark text-light")+" app"}>
         <BrowserRouter>
             <CssBaseline/>
             <NavBar/>
             <Routes>
                 <Route path="/" element={<LoginPage/>} />
-                <Route path="/home" element={<HomePage/>} />
-                <Route path="/profile/:userId" element={<Profile/>} />
+                <Route path="/home" element={<Authenticate children={<HomePage/>}></Authenticate>} />
+                <Route path="/profile/:userId" element={<Authenticate children={<Profile/>}></Authenticate>} />
             </Routes>
         </BrowserRouter>
     </div>
