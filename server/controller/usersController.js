@@ -3,6 +3,7 @@ import Follower from "../modules/Followers.js";
 import { statusConstants } from "../utils/statusConstants.js";
 import {messageConstants} from "../utils/messageConstants.js"
 import { errorHandeler } from "../middleware/errorHandeler.js";
+import Post from "../modules/Post.js";
 
 
 /* 
@@ -12,6 +13,8 @@ import { errorHandeler } from "../middleware/errorHandeler.js";
 */
 const profile = async (request,response) =>{
     const user = await User.findById({_id:request.user._id});
+    const posts = await Post.find({ user_id: user._id }).sort({ createdAt: -1 });
+    user.posts = posts;
     response.status(200).json(user)
 }
 
@@ -23,6 +26,8 @@ const profile = async (request,response) =>{
 const getUser = async (request,response) =>{
     const user = await User.findById({_id:request.params.id});
     if(user){
+        const posts = await Post.find({ user_id: user._id }).sort({ createdAt: -1 });
+        user.posts = posts;
         response.status(200).json(user)
     }else{
         response.status(statusConstants.NOT_FOUND);

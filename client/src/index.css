@@ -8,7 +8,7 @@ body,
   min-width: 100%;
   font-family: "Rubik", sans-serif;
 }
-
+::-webkit-scrollbar {display:none;}
 .login-container{
   margin-top: 5%;
   margin-bottom: 5%;
@@ -53,4 +53,22 @@ body,
 .login-form-1 .ForgetPwd{
   font-weight: 600;
   text-decoration: none;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.dynamic-textarea {
+  width: 100%;
+  resize: none; /* Disable resizing */
+  overflow: hidden; /* Hide overflow */
+  border: none; /* Remove border */
+  padding: 8px; /* Add some padding for better aesthetics */
+  font-size: 16px; /* Define your font size */
+  line-height: 1.5; /* Define your line height */
+}
+
+/* Override textarea default styles */
+.dynamic-textarea:focus {
+  outline: none;
 }

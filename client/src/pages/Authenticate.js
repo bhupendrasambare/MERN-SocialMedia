@@ -11,7 +11,7 @@ const Authenticate = ({children}) => {
         }
     },[])
   return (
-    <>{children}</>
+    <>{ user && children}</>
   )
 }
 
