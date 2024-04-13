@@ -68,7 +68,7 @@ const LoginPage = () => {
     });
 
     const handleForgotPasswordClick = () => {
-        setShowForgotPasswordForm(true);
+        setShowForgotPasswordForm(!showForgotPasswordForm);
     };
 
     return (
@@ -143,11 +143,13 @@ const LoginPage = () => {
                             </form>
                         )}
                         <div className="d-flex justify-content-between container mt-5">
-                            <div className="mb-3">
-                                <a href="#" className={"link-underline link-underline-opacity-0 fw-bold " + (mode == "light" ? "text-dark" : "text-light")}>Sign up</a>
+                            <div className="mb-3 mx-5">
+                                <a className={"link-underline link-underline-opacity-0 fw-bold " + (mode == "light" ? "text-dark" : "text-light")}>Sign up</a>
                             </div>
-                            <div className="mb-3">
-                                <a href="#" onClick={handleForgotPasswordClick} className={"link-underline link-underline-opacity-0 fw-bold " + (mode == "light" ? "text-dark" : "text-light")}>Forgot Password?</a>
+                            <div className="mb-3 mx-5">
+                                <a onClick={handleForgotPasswordClick} className={"link-underline link-underline-opacity-0 fw-bold " + (mode == "light" ? "text-dark" : "text-light")}>
+                                    {!setShowForgotPasswordForm ?"Forgot Password?":"Login"}
+                                </a>
                             </div>
                         </div>
                     </div>

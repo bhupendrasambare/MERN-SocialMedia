@@ -29,9 +29,9 @@ const NavBar = () => {
     }
 
     return (
-        <Navbar expand="sm" className='shadow-lg' bg={mode} data-bs-theme={mode} >
+        <Navbar expand="sm" className='shadow-lg sticky-top' bg={mode} data-bs-theme={mode} >
             <Container fluid className='container'>
-                <Navbar.Brand href="#" className={"fw-bold"}>Let's talk</Navbar.Brand>
+                <Navbar.Brand onClick={()=>navigate("/home")} className={"cursor-pointer fw-bold"}>Let's talk</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                 <Nav
@@ -56,7 +56,7 @@ const NavBar = () => {
                     </Button>
                     {user && 
                         <>
-                            <Button title='Logout' variant="border-0 rounded-pill">
+                            <Button title='Logout' onClick={()=>navigate("/user")} variant="border-0 rounded-pill">
                                     <AccountCircleRounded />
                             </Button>
                             <Button onClick={logout} title='Logout' variant="border-0 rounded-pill">
